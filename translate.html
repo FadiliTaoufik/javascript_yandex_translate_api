@@ -1,0 +1,150 @@
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>İngilizce - Türkçe </title>
+      	<script type="text/javascript">
+
+            //Gidilen adres geriye parametre JSON olarak üç değer döndürür. Bu üç değer code,lang ve text'dir.
+            //Code işlem olarak 200 alırsa işlem başarlı demektir.
+            //lang çeviri yapılan dil. Bizim paremetre olarak gönderdiğimiz deqerdir.
+            //text ise gönderilen değerin çeviri yapılmış halidir.
+			
+			function alertContents(httpRequest){
+
+                //XMLHttpRequest nesnesinde geriye 4 değer döndürülmüş ise işlem başarılı demektir.
+			    if (httpRequest.readyState == 4){
+			        // İşlem başarılı ve adrese gidildiğinde adresten dönen değer 200 veya 0 ise yanıt alınabilmiştir.
+			        if ((httpRequest.status == 200) || (httpRequest.status == 0)){
+                        //Gelen değer JSON tipindedir. Gelen değer parçalanmıştır.
+			            json = JSON.parse(httpRequest.responseText)
+                        //Çeviri yapıldıktan sonra. Kullanıcıya gösterilmek üzere yazdırılmıştır.
+			           	document.getElementById("translation").innerHTML = json.text;
+
+			        }else{
+                        document.getElementById("message").innerHTML = 'Problem ile karşılaşıldı. ' + httpRequest.status + httpRequest.responseText;
+			        }
+			    }
+			}
+			 
+			function send_with_ajax(){
+
+                document.getElementById("translation").innerHTML = "Çevriliyor..";
+
+                //Yandex'in verdiği anahtar
+               var yandex_key = 'trnsl.1.1.20140331T135617Z.063bbe8c91468822.c09fa4c8ae4582dfd688d4b7d34225226409a23d';
+                //Kullanıcının girdiği metin
+               var text = document.getElementById('text').value.toString();
+                //Kullanıcının seçimi. İstenildiği kadar seçim yaptırılabilir.
+               var choice = document.getElementById('choice').value.toString();
+
+               //Url oluşturulmuştur.
+               var the_url = "https://translate.yandex.net/api/v1.5/tr.json/translate?key="+yandex_key+"&lang="+choice+"&text="+text;
+
+               //Oluşturulan URL'e gidilebilmek için XMLHttpRequest() nesnesi kullanılmıştır.
+			   var httpRequest = new XMLHttpRequest();
+                // hhtpRequest okumaya hazır olduğunda çagırılacak fonksiyon tanımı
+			   httpRequest.onreadystatechange = function() { alertContents(httpRequest); };
+                //open metodu ile url açılmıştır.
+			   httpRequest.open("GET", the_url, true);
+			   //Gönderilme işlemi yapılmıştır. null ifadesi yerine url'e paramterede gönderilebilir.
+               httpRequest.send(null);
+			}
+      	</script>
+
+  </head>
+
+<style type="text/css">
+    textarea{
+        resize: none;
+        border-radius: 3px;
+        border-color: #ddd;
+    }
+    .clear{
+        clear: both;
+    }
+    .group{
+        float: left;
+    }
+
+    #choice,#translate{
+        padding: 5px;
+    }
+
+    /* Buton */
+
+    .translate,#choice{
+        cursor: pointer;
+        border:1px solid #CCCCCC;
+        -webkit-box-shadow: #FEFFFF 0px 1px 1px ;
+        -moz-box-shadow: #FEFFFF 0px 1px 1px ;
+        box-shadow: #FEFFFF 0px 1px 1px ;
+        -webkit-border-radius: 3px; -moz-border-radius: 3px;
+        border-radius: 3px;
+        font-size:14px;
+        font-family:arial, helvetica, sans-serif;
+        padding: 6px 6px 6px 6px;
+        text-decoration:none;
+        display:inline-block;
+        text-shadow: 0px 1px 0 rgba(255,255,255,1);
+        font-weight:bold; color: #4A4A4A;
+        background-color: #F7F5F6; background-image: -webkit-gradient(linear, left top, left bottom, from(#F7F5F6), to(#DDDDDD));
+        background-image: -webkit-linear-gradient(top, #F7F5F6, #DDDDDD);
+        background-image: -moz-linear-gradient(top, #F7F5F6, #DDDDDD);
+        background-image: -ms-linear-gradient(top, #F7F5F6, #DDDDDD);
+        background-image: -o-linear-gradient(top, #F7F5F6, #DDDDDD);
+        background-image: linear-gradient(to bottom, #F7F5F6, #DDDDDD);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#F7F5F6, endColorstr=#DDDDDD);
+
+    }
+    .translate{
+        color:#4c66a4;
+    }
+
+    .translate:hover{
+        border:1px solid #ADADAD;
+        background-color: #E0E0E0; background-image: -webkit-gradient(linear, left top, left bottom, from(#E0E0E0), to(#BDBBBC));
+        background-image: -webkit-linear-gradient(top, #E0E0E0, #BDBBBC);
+        background-image: -moz-linear-gradient(top, #E0E0E0, #BDBBBC);
+        background-image: -ms-linear-gradient(top, #E0E0E0, #BDBBBC);
+        background-image: -o-linear-gradient(top, #E0E0E0, #BDBBBC);
+        background-image: linear-gradient(to bottom, #E0E0E0, #BDBBBC);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#E0E0E0, endColorstr=#BDBBBC);
+    }
+
+    .translate:active{
+        background-color: #F7F5F6; background-image: -webkit-gradient(linear, left top, left bottom, from(#F7F5F6), to(#DDDDDD));
+    }
+
+    /* Buton */
+
+</style>
+
+ <body>
+
+
+<div class="group">
+	<div class="group_element"><textarea id="text" onchange='send_with_ajax();' rows="8" cols="30"placeholder="Metin giriniz"></textarea></div>
+</div>
+
+
+<div class="group">
+
+	<div class="group_element"><textarea id="translation" rows="8" cols="30"></textarea></div>
+</div>
+
+
+<div class="clear"></div>
+
+
+<select id="choice">
+    <option value="tr-en">Türkçe-İngilizce</option>
+    <option value="en-tr">İngilizce-Türkçe</option>
+</select>
+
+
+
+<button class="translate" onClick="send_with_ajax();">Çevir</button>
+
+<div id="message"></div>
+
+
+  </body>
+</html>
