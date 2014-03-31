@@ -8,47 +8,48 @@
             //Code işlem olarak 200 alırsa işlem başarlı demektir.
             //lang çeviri yapılan dil. Bizim paremetre olarak gönderdiğimiz deqerdir.
             //text ise gönderilen değerin çeviri yapılmış halidir.
-			
-			function alertContents(httpRequest){
+	
+	//apiden dönen değere göre sonuç gösterilen fonksiyon		
+	function alertContents(httpRequest){
 
-                        //XMLHttpRequest nesnesinde geriye 4 değer döndürülmüş ise işlem başarılı demektir.
-			    if (httpRequest.readyState == 4){
-			        // İşlem başarılı ve adrese gidildiğinde adresten dönen değer 200 veya 0 ise yanıt alınabilmiştir.
-			        if ((httpRequest.status == 200) || (httpRequest.status == 0)){
-                        //Gelen değer JSON tipindedir. Gelen değer parçalanmıştır.
-			            json = JSON.parse(httpRequest.responseText)
+        	//XMLHttpRequest nesnesinde geriye 4 değer döndürülmüş ise işlem başarılı demektir.
+		if (httpRequest.readyState == 4){
+		// İşlem başarılı ve adrese gidildiğinde adresten dönen değer 200 veya 0 ise yanıt alınabilmiştir.
+		       if ((httpRequest.status == 200) || (httpRequest.status == 0)){
+                       //Gelen değer JSON tipindedir. Gelen değer parçalanmıştır.
+		            json = JSON.parse(httpRequest.responseText)
                         //Çeviri yapıldıktan sonra. Kullanıcıya gösterilmek üzere yazdırılmıştır.
-			           	document.getElementById("translation").innerHTML = json.text;
+		        	document.getElementById("translation").innerHTML = json.text;
 
-			        }else{
+		        }else{
                         document.getElementById("message").innerHTML = 'Problem ile karşılaşıldı. ' + httpRequest.status + httpRequest.responseText;
-			        }
-			    }
-			}
-			 
-			function send_with_ajax(){
+			      }
+		}
+	}
+	//apinin kullanıldığı fonksiyon		 
+	function send_with_ajax(){
 
-                document.getElementById("translation").innerHTML = "Çevriliyor..";
+        	document.getElementById("translation").innerHTML = "Çevriliyor..";
 
                 //Yandex'in verdiği anahtar
-               var yandex_key = 'YOUR_TRANSLATE_KEY';
-                //Kullanıcının girdiği metin
-               var text = document.getElementById('text').value.toString();
+               	var yandex_key = 'YOUR_TRANSLATE_KEY';
+        	 //Kullanıcının girdiği metin
+               	var text = document.getElementById('text').value.toString();
                 //Kullanıcının seçimi. İstenildiği kadar seçim yaptırılabilir.
-               var choice = document.getElementById('choice').value.toString();
+        	 var choice = document.getElementById('choice').value.toString();
 
-               //Url oluşturulmuştur.
-               var the_url = "https://translate.yandex.net/api/v1.5/tr.json/translate?key="+yandex_key+"&lang="+choice+"&text="+text;
+        	 //Url oluşturulmuştur.
+               	var the_url = "https://translate.yandex.net/api/v1.5/tr.json/translate?key="+yandex_key+"&lang="+choice+"&text="+text;
 
-               //Oluşturulan URL'e gidilebilmek için XMLHttpRequest() nesnesi kullanılmıştır.
-			   var httpRequest = new XMLHttpRequest();
+                //Oluşturulan URL'e gidilebilmek için XMLHttpRequest() nesnesi kullanılmıştır.
+		var httpRequest = new XMLHttpRequest();
                 // hhtpRequest okumaya hazır olduğunda çagırılacak fonksiyon tanımı
-			   httpRequest.onreadystatechange = function() { alertContents(httpRequest); };
+		httpRequest.onreadystatechange = function() { alertContents(httpRequest); };
                 //open metodu ile url açılmıştır.
-			   httpRequest.open("GET", the_url, true);
-			   //Gönderilme işlemi yapılmıştır. null ifadesi yerine url'e paramterede gönderilebilir.
-               httpRequest.send(null);
-			}
+		httpRequest.open("GET", the_url, true);
+		//Gönderilme işlemi yapılmıştır. null ifadesi yerine url'e paramterede gönderilebilir.
+               	httpRequest.send(null);
+	}
       	</script>
 
   </head>
