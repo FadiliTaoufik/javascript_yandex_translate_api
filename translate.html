@@ -11,7 +11,7 @@
 			
 			function alertContents(httpRequest){
 
-                //XMLHttpRequest nesnesinde geriye 4 değer döndürülmüş ise işlem başarılı demektir.
+                        //XMLHttpRequest nesnesinde geriye 4 değer döndürülmüş ise işlem başarılı demektir.
 			    if (httpRequest.readyState == 4){
 			        // İşlem başarılı ve adrese gidildiğinde adresten dönen değer 200 veya 0 ise yanıt alınabilmiştir.
 			        if ((httpRequest.status == 200) || (httpRequest.status == 0)){
@@ -31,7 +31,7 @@
                 document.getElementById("translation").innerHTML = "Çevriliyor..";
 
                 //Yandex'in verdiği anahtar
-               var yandex_key = 'trnsl.1.1.20140331T135617Z.063bbe8c91468822.c09fa4c8ae4582dfd688d4b7d34225226409a23d';
+               var yandex_key = 'YOUR_TRANSLATE_KEY';
                 //Kullanıcının girdiği metin
                var text = document.getElementById('text').value.toString();
                 //Kullanıcının seçimi. İstenildiği kadar seçim yaptırılabilir.
@@ -126,19 +126,16 @@
 
 
 <div class="group">
-
 	<div class="group_element"><textarea id="translation" rows="8" cols="30"></textarea></div>
 </div>
 
 
 <div class="clear"></div>
 
-
 <select id="choice">
     <option value="tr-en">Türkçe-İngilizce</option>
     <option value="en-tr">İngilizce-Türkçe</option>
 </select>
-
 
 
 <button class="translate" onClick="send_with_ajax();">Çevir</button>
